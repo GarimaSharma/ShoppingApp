@@ -39,7 +39,7 @@ public class ShoppingItemsListingAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mThumbIds.get(position);
     }
 
     @Override
