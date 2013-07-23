@@ -3,6 +3,7 @@ package com.example.ShoppingApplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.GridView;
+import com.example.ShoppingApplication.adapters.ShoppingItemsListingAdapter;
 
 public class ShoppingApplication extends Activity {
     
@@ -13,6 +14,6 @@ public class ShoppingApplication extends Activity {
 
         GridView gridView = (GridView) findViewById(R.id.grid_view);
 
-        gridView.setAdapter(new ImageAdapter(this));
+        gridView.setAdapter(new ShoppingItemsListingAdapter(this));
     }
 }
