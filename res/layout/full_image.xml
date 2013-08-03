@@ -4,6 +4,12 @@
               android:layout_height="match_parent"
               android:orientation="vertical" >
 
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:text="path will go here "
+              android:id="@+id/input_label"/>
+
     <ImageView android:id="@+id/full_image_view"
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"/>

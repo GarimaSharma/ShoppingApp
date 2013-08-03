@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.ShoppingApplication.R;
+import com.example.ShoppingApplication.model.Product;
+import com.example.ShoppingApplication.repository.ProductRepository;
 import com.example.ShoppingApplication.services.ImageDownloader;
 
 import java.io.IOException;
@@ -26,13 +28,14 @@ public class ShoppingItemsListingAdapter extends BaseAdapter {
     private Context mContext;
 
     public List<String> mThumbIds = new ArrayList<String>();
+    public List<Product> products = new ArrayList<Product>();
 
     public ShoppingItemsListingAdapter(Context c) {
         mContext = c;
-        for(int i = 0; i<100; i++)
-        {
-            mThumbIds.add("http://www.hul.co.in/Images/bru-roast-ground-450x450_tcm114-294646.jpg");
-            mThumbIds.add("https://si0.twimg.com/profile_images/77536617/lipton_new.jpg");
+        ProductRepository productRepository = new ProductRepository(mContext);
+        products = productRepository.getProducts();
+        for (Product product : products) {
+            mThumbIds.add(product.getImagePath());
         }
     }
 
