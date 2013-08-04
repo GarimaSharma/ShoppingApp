@@ -3,6 +3,7 @@ package com.example.ShoppingApplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -29,51 +31,16 @@ public class FullViewActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_image);
-        Intent i = getIntent();
 
-        int position = i.getExtras().getInt("id");
-        //ShoppingItemsListingAdapter imageAdapter = new ShoppingItemsListingAdapter(this);
-
+        Bundle extras = getIntent().getExtras();
+        String title = extras.getString("title");
+        String imageUrl = extras.getString("image_url");
+        TextView imageTitle = (TextView) findViewById(R.id.input_label);
         ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
-        TextView title =(TextView) findViewById(R.id.input_label);
-
-
-//        String str;
-//
-//        JSONObject objEnvelopeJSON = new JSONObject();
-//
-//        try {
-//            JSONObject x = new JSONObject();
-//            x.put("a", "b");
-//            objEnvelopeJSON.put("trial",x);
-//
-//
-//        JSONObject objEnvelopeData = objEnvelopeJSON
-//                .getJSONObject("trial");
-//
-//        str = objEnvelopeData.getString("a");
-//        title.setText(str);
-//
-//
-//        } catch (JSONException e1) {
-//            e1.printStackTrace();
-//        }
-
-        ImageDownloader imageDownlaoder = new ImageDownloader();
-        //Bitmap bitmap = imageDownlaoder.downloadImage(imageAdapter.mThumbIds.get(position));
-       // imageView.setImageBitmap(bitmap);
+        imageTitle.setText(title);
+        ImageDownloader imageDownloader = new ImageDownloader();
+        Bitmap bitmap = imageDownloader.downloadImage(imageUrl);
+        imageView.setImageBitmap(bitmap);
     }
 
-    private String processEntity(HttpEntity entity)
-            throws IllegalStateException, IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(entity
-                .getContent()));
-        String line, result = "";
-
-        while ((line = br.readLine()) != null)
-            result += line;
-        br.close();
-        return result;
-    }
 }
