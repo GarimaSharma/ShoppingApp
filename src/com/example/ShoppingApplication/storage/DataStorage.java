@@ -51,7 +51,7 @@ public class DataStorage extends SQLiteOpenHelper {
     public List<Product> get() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME , null);
-        List<Product> issues = new ArrayList<Product>();
+        List<Product> products = new ArrayList<Product>();
         if (c != null ) {
             if  (c.moveToFirst()) {
                 do {
@@ -59,11 +59,11 @@ public class DataStorage extends SQLiteOpenHelper {
                     String description = c.getString(c.getColumnIndex(DESCRIPTION_COL));
                     String imagePath = c.getString(c.getColumnIndex(IMAGEPATH_COL));
                     Product product = new Product(title,description,imagePath);
-                    issues.add(product);
+                    products.add(product);
                 }while (c.moveToNext());
             }
         }
-        return issues;
+        return products;
     }
 
 }
