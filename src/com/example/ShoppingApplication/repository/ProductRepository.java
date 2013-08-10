@@ -23,4 +23,8 @@ public class ProductRepository {
     public List<Product> getProducts() {
         return dataStorage.get();
     }
+
+    public void clearDB() {
+        dataStorage.clear();
+    }
 }

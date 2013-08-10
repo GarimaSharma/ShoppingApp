@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 import com.example.ShoppingApplication.model.Product;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class DataStorage extends SQLiteOpenHelper {
             TITLE_COL + " TEXT," +
             DESCRIPTION_COL + " TEXT, " +
             IMAGEPATH_COL+" TEXT );";
+
 
     public void store(Product product) {
         SQLiteDatabase db = getWritableDatabase();
@@ -66,5 +68,9 @@ public class DataStorage extends SQLiteOpenHelper {
         return products;
     }
 
+    public void clear() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
+    }
 }
 

@@ -37,10 +37,11 @@ public class JsonDeserializer {
             strJSONData = processEntity(resp.getEntity());
 
             JSONArray productInfo = new JSONArray(strJSONData);
+            ProductRepository productRepository = new ProductRepository(context);
+            productRepository.clearDB();
 
             for (int index = 0; index < productInfo.length(); index++) {
                 JSONObject x = new JSONObject(productInfo.getString(index));
-                ProductRepository productRepository = new ProductRepository(context);
                 productRepository.createProduct(x);
             }
         } catch (IOException e) {
