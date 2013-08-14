@@ -7,16 +7,17 @@
               android:background="#ffffff"
               android:padding="10dp">
 
-    <FrameLayout
+    <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#9999ff"
             android:padding="10dp">
 
         <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/imageView"
-                android:layout_gravity="center"/>
-    </FrameLayout>
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"/>
+    </LinearLayout>
 </LinearLayout>
