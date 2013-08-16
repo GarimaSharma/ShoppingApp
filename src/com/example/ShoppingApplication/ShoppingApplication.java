@@ -33,7 +33,7 @@ public class ShoppingApplication extends Activity {
                 Intent intent = new Intent(getApplicationContext(), FullViewActivity.class);
                 ProductRepository productRepository = new ProductRepository(getApplicationContext());
                 List<Product> products = productRepository.getProducts();
-                intent.putExtra("title", products.get(position).getTitle());
+                intent.putExtra("description", products.get(position).getDescription());
                 intent.putExtra("image_url", products.get(position).getImagePath());
                 startActivity(intent);
             }

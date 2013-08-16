@@ -33,11 +33,11 @@ public class FullViewActivity extends Activity {
         setContentView(R.layout.full_image);
 
         Bundle extras = getIntent().getExtras();
-        String title = extras.getString("title");
+        String description = extras.getString("description");
         String imageUrl = extras.getString("image_url");
-        TextView imageTitle = (TextView) findViewById(R.id.input_label);
+        TextView imageDescription = (TextView) findViewById(R.id.input_label);
         ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
-        imageTitle.setText(title);
+        imageDescription.setText(description);
         ImageDownloader imageDownloader = new ImageDownloader();
         Bitmap bitmap = imageDownloader.downloadImage(imageUrl);
         imageView.setImageBitmap(bitmap);

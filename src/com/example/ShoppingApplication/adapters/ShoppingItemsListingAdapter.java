@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.example.ShoppingApplication.R;
 import com.example.ShoppingApplication.model.Product;
 import com.example.ShoppingApplication.repository.ProductRepository;
@@ -19,26 +20,22 @@ import java.util.List;
 public class ShoppingItemsListingAdapter extends BaseAdapter {
     private Context mContext;
 
-    public List<String> mThumbIds = new ArrayList<String>();
     public List<Product> products = new ArrayList<Product>();
 
     public ShoppingItemsListingAdapter(Context c) {
         mContext = c;
         ProductRepository productRepository = new ProductRepository(mContext);
         products = productRepository.getProducts();
-        for (Product product : products) {
-            mThumbIds.add(product.getImagePath());
-        }
     }
 
     @Override
     public int getCount() {
-        return mThumbIds.size();
+        return products.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mThumbIds.get(position);
+        return products.get(position);
     }
 
     @Override
@@ -48,20 +45,15 @@ public class ShoppingItemsListingAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        ImageView imageView = new ImageView(mContext);
         ImageDownloader imageDownloader = new ImageDownloader();
-        Bitmap bitmap = imageDownloader.downloadImage(mThumbIds.get(position));
-//
-//        imageView.setImageBitmap(bitmap);
-//
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        imageView.setLayoutParams(new GridView.LayoutParams(70, 70));
-//        return imageView;
+        Bitmap bitmap = imageDownloader.downloadImage(products.get(position).getImagePath());
+
         LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.cell_layout, null);
         ImageView imageView = (ImageView) layout.findViewById(R.id.imageView);
+        TextView textView = (TextView) layout.findViewById(R.id.title);
         imageView.setImageBitmap(bitmap);
+        textView.setText(products.get(position).getTitle());
         return layout;
-
     }
 }
 
