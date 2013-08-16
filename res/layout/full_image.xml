@@ -2,18 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:orientation="vertical"
+              android:background="#5E1414"  >
 
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
               android:text="path will go here "
-              android:id="@+id/input_label"/>
+              android:id="@+id/input_label"
+              android:textColor="#FFFFFF"  />
 
     <ImageView android:id="@+id/full_image_view"
                android:layout_width="fill_parent"
                android:layout_height="wrap_content"
-               android:minHeight="250dp"/>
+               android:minHeight="250dp"
+               android:paddingBottom="15dp"/>
 
     <Button
             android:layout_width="wrap_content"
