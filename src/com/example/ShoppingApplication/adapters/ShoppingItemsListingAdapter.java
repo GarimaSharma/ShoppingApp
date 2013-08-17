@@ -46,13 +46,15 @@ public class ShoppingItemsListingAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageDownloader imageDownloader = new ImageDownloader();
-        Bitmap bitmap = imageDownloader.downloadImage(products.get(position).getImagePath());
+        Product product = products.get(position);
+        Bitmap bitmap = imageDownloader.downloadImage(product.getImagePath());
 
         LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.cell_layout, null);
         ImageView imageView = (ImageView) layout.findViewById(R.id.imageView);
         TextView textView = (TextView) layout.findViewById(R.id.title);
         imageView.setImageBitmap(bitmap);
-        textView.setText(products.get(position).getTitle());
+        textView.setText(product.getTitle());
+        layout.setTag(product);
         return layout;
     }
 }
