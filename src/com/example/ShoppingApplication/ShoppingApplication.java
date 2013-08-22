@@ -3,6 +3,8 @@ package com.example.ShoppingApplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -11,6 +13,8 @@ import com.example.ShoppingApplication.model.Product;
 import com.example.ShoppingApplication.repository.ProductRepository;
 import com.example.ShoppingApplication.services.JsonDeserializer;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ShoppingApplication extends Activity {
@@ -25,6 +29,10 @@ public class ShoppingApplication extends Activity {
 
         GridView gridView = (GridView) findViewById(R.id.grid_view);
         gridView.setAdapter(new ShoppingItemsListingAdapter(this));
+
+        Time time = new Time();
+        time.setToNow();
+        Log.d("Start Time - ", DateFormat.getDateTimeInstance().format(new Date()));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
