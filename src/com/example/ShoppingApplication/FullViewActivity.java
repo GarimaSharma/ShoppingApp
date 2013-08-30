@@ -1,29 +1,10 @@
 package com.example.ShoppingApplication;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.ShoppingApplication.adapters.ShoppingItemsListingAdapter;
-import com.example.ShoppingApplication.services.ImageDownloader;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import com.example.ShoppingApplication.services.DownloadImagesTask;
 
 public class FullViewActivity extends Activity {
 
@@ -38,9 +19,7 @@ public class FullViewActivity extends Activity {
         TextView imageDescription = (TextView) findViewById(R.id.input_label);
         ImageView imageView = (ImageView) findViewById(R.id.full_image_view);
         imageDescription.setText(description);
-        ImageDownloader imageDownloader = new ImageDownloader();
-        Bitmap bitmap = imageDownloader.downloadImage(imageUrl);
-        imageView.setImageBitmap(bitmap);
+        imageView.setTag(imageUrl);
+        new DownloadImagesTask().execute(imageView);
     }
-
 }

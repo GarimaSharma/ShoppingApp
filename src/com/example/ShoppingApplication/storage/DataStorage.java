@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 import com.example.ShoppingApplication.model.Product;
 
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ public class DataStorage extends SQLiteOpenHelper {
             _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TITLE_COL + " TEXT," +
             DESCRIPTION_COL + " TEXT, " +
-            IMAGEPATH_COL+" TEXT );";
+            IMAGEPATH_COL + " TEXT );";
 
 
     public void store(Product product) {
         SQLiteDatabase db = getWritableDatabase();
-        SQLiteStatement statement = db.compileStatement("insert into " + TABLE_NAME + " (" + TITLE_COL + "," + DESCRIPTION_COL + ","+ IMAGEPATH_COL +") values ( ?, ?, ?)");
+        SQLiteStatement statement = db.compileStatement("insert into " + TABLE_NAME + " (" + TITLE_COL + "," + DESCRIPTION_COL + "," + IMAGEPATH_COL + ") values ( ?, ?, ?)");
         statement.bindString(1, product.getTitle());
         statement.bindString(2, product.getDescription());
         statement.bindString(3, product.getImagePath());
@@ -52,17 +51,17 @@ public class DataStorage extends SQLiteOpenHelper {
 
     public List<Product> get() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         List<Product> products = new ArrayList<Product>();
-        if (c != null ) {
-            if  (c.moveToFirst()) {
+        if (c != null) {
+            if (c.moveToFirst()) {
                 do {
                     String title = c.getString(c.getColumnIndex(TITLE_COL));
                     String description = c.getString(c.getColumnIndex(DESCRIPTION_COL));
                     String imagePath = c.getString(c.getColumnIndex(IMAGEPATH_COL));
-                    Product product = new Product(title,description,imagePath);
+                    Product product = new Product(title, description, imagePath);
                     products.add(product);
-                }while (c.moveToNext());
+                } while (c.moveToNext());
             }
         }
         return products;

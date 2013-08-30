@@ -11,11 +11,11 @@ import java.net.URLConnection;
 
 public class ImageDownloader {
 
-    public Bitmap downloadImage(String URL) {
+    public Bitmap downloadImage(String url) {
         Bitmap bitmap = null;
         InputStream in = null;
         try {
-            in = openHttpConnection(URL);
+            in = openHttpConnection(url);
             bitmap = BitmapFactory.decodeStream(in);
             in.close();
         } catch (IOException e1) {
