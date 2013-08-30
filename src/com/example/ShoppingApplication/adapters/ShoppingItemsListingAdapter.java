@@ -1,7 +1,6 @@
 package com.example.ShoppingApplication.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.example.ShoppingApplication.R;
 import com.example.ShoppingApplication.model.Product;
 import com.example.ShoppingApplication.repository.ProductRepository;
-import com.example.ShoppingApplication.services.ImageDownloader;
+import com.example.ShoppingApplication.services.DownloadImagesTask;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -48,15 +47,14 @@ public class ShoppingItemsListingAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageDownloader imageDownloader = new ImageDownloader();
         Product product = products.get(position);
-        Bitmap bitmap = imageDownloader.downloadImage(product.getImagePath());
-        Log.d("After Image download Time - ", DateFormat.getDateTimeInstance().format(new Date()));
 
         LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.cell_layout, null);
         ImageView imageView = (ImageView) layout.findViewById(R.id.imageView);
         TextView textView = (TextView) layout.findViewById(R.id.title);
-        imageView.setImageBitmap(bitmap);
+        imageView.setTag(product.getImagePath());
+        new DownloadImagesTask().execute(imageView);
+        Log.d("After Image download Time - ", DateFormat.getDateTimeInstance().format(new Date()));
         textView.setText(product.getTitle());
         layout.setTag(product);
         return layout;
