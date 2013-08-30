@@ -12,6 +12,7 @@ import android.widget.GridView;
 import com.example.ShoppingApplication.adapters.ShoppingItemsListingAdapter;
 import com.example.ShoppingApplication.model.Product;
 import com.example.ShoppingApplication.repository.ProductRepository;
+import com.example.ShoppingApplication.services.Callback;
 import com.example.ShoppingApplication.services.JsonDeserializer;
 
 import java.text.DateFormat;
@@ -25,7 +26,6 @@ public class ShoppingApplication extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_layout);
 
-
         final ProgressDialog progressDialog = ProgressDialog.show(ShoppingApplication.this, "", "Loading...", true, true);
         final GridView gridView = (GridView) findViewById(R.id.grid_view);
 
@@ -33,22 +33,9 @@ public class ShoppingApplication extends Activity {
         time.setToNow();
         Log.d("Start Time - ", DateFormat.getDateTimeInstance().format(new Date()));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run()
-            {
-                JsonDeserializer jsonDeserializer = new JsonDeserializer(getApplicationContext());
-                jsonDeserializer.deserializeJson();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        gridView.setAdapter(new ShoppingItemsListingAdapter(ShoppingApplication.this));
-                        progressDialog.dismiss();
-                    }
-                });
-            }
-        }).start();
+        final Callback<Product> productCallback = downloadProductInfo(progressDialog, gridView);
+        ProductRepository productRepo = new ProductRepository(getApplicationContext());
+        productRepo.downloadProductInfo(productCallback);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,4 +49,16 @@ public class ShoppingApplication extends Activity {
             }
         });
     }
+
+    private Callback<Product> downloadProductInfo(final ProgressDialog dialog, final GridView gridView) {
+        return new Callback<Product>() {
+            @Override
+            public void execute() {
+                Log.d("After JSON Deserialization Time - ", DateFormat.getDateTimeInstance().format(new Date()));
+                gridView.setAdapter(new ShoppingItemsListingAdapter(ShoppingApplication.this));
+                dialog.dismiss();
+            }
+        };
+    }
+
 }
