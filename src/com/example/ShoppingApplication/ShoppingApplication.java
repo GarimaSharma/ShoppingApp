@@ -1,6 +1,7 @@
 package com.example.ShoppingApplication;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -24,15 +25,30 @@ public class ShoppingApplication extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_layout);
 
-        JsonDeserializer jsonDeserializer = new JsonDeserializer(getApplicationContext());
-        jsonDeserializer.deserializeJson();
 
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
-        gridView.setAdapter(new ShoppingItemsListingAdapter(this));
+        final ProgressDialog progressDialog = ProgressDialog.show(ShoppingApplication.this, "", "Loading...", true, true);
+        final GridView gridView = (GridView) findViewById(R.id.grid_view);
 
         Time time = new Time();
         time.setToNow();
         Log.d("Start Time - ", DateFormat.getDateTimeInstance().format(new Date()));
+
+        new Thread(new Runnable() {
+            @Override
+            public void run()
+            {
+                JsonDeserializer jsonDeserializer = new JsonDeserializer(getApplicationContext());
+                jsonDeserializer.deserializeJson();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        gridView.setAdapter(new ShoppingItemsListingAdapter(ShoppingApplication.this));
+                        progressDialog.dismiss();
+                    }
+                });
+            }
+        }).start();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
