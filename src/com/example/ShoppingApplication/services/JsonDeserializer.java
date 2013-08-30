@@ -20,42 +20,26 @@ import java.util.List;
 
 public class JsonDeserializer {
 
-    private final Context context;
-
-    public JsonDeserializer(Context context) {
-        this.context = context;
-    }
-
-    public void deserializeJson() {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://xplorationstudio.com/sample_images/products_json.json");
+    public static void deserializeJson(HttpResponse resp, Context context) throws IOException, JSONException {
         String strJSONData;
 
-        HttpResponse resp = null;
-        try {
-            resp = httpClient.execute(httpGet);
-            strJSONData = processEntity(resp.getEntity());
+        strJSONData = processEntity(resp.getEntity());
 
-            JSONArray productInfo = new JSONArray(strJSONData);
-            ProductRepository productRepository = new ProductRepository(context);
-            productRepository.clearDB();
+        JSONArray productInfo = new JSONArray(strJSONData);
+        com.example.ShoppingApplication.repository.ProductRepository productRepository = new com.example.ShoppingApplication.repository.ProductRepository(context);
+        productRepository.clearDB();
 
-            for (int index = 0; index < productInfo.length(); index++) {
-                JSONObject x = new JSONObject(productInfo.getString(index));
-                productRepository.createProduct(x);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        for (int index = 0; index < productInfo.length(); index++) {
+            JSONObject x = new JSONObject(productInfo.getString(index));
+            productRepository.createProduct(x);
+
         }
     }
 
-    private String processEntity(HttpEntity entity)
-            throws IllegalStateException, IOException {
+    private static String processEntity(HttpEntity entity) throws IllegalStateException, IOException { {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(entity
-                .getContent()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
         String line, result = "";
 
         while ((line = br.readLine()) != null)
@@ -63,4 +47,5 @@ public class JsonDeserializer {
         br.close();
         return result;
     }
+}
 }
