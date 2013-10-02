@@ -3,16 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="100dp"
-              android:layout_height="100dp"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp"
               android:background="#ffffff"
-              android:padding="10dp">
+              android:gravity="center">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:text="New Text"
             android:id="@+id/title"
-            android:layout_gravity="center|top"
             android:textColor="#CCCCCC"
             />
 
@@ -24,10 +25,9 @@
             android:padding="10dp">
 
         <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
                 android:id="@+id/imageView"
-                android:layout_gravity="center"
                 android:scaleType="fitCenter"/>
     </LinearLayout>
 </LinearLayout>
